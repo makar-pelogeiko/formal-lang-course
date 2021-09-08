@@ -5,7 +5,7 @@ import networkx
 
 def input_int(text):
     print(text)
-    while (True):
+    while True:
         num = input()
         if num.isdigit():
             return int(num)
@@ -36,7 +36,7 @@ def menu(items_lst: list[str]):
             print(f"""{num} - {item}""")
             num = num + 1
         response = input("input number: ")
-        if (response.isdigit()):
+        if response.isdigit():
             int_resp = int(response)
             if (int_resp > 0) and (int_resp < num):
                 return int_resp
@@ -46,10 +46,12 @@ def menu(items_lst: list[str]):
 def run_console_app():
     func_items = [call_get_info, call_generate_and_save_graph]
     while True:
-        menu_lst = ["menu list:",
+        menu_lst = [
+                    "menu list:",
                     "exit",
                     "get info about graph",
-                    "create 2 cycles graph and save it to .DOT"]
+                    "create 2 cycles graph and save it to .DOT"
+        ]
         element = menu(items_lst=menu_lst) - 2
         if element == -1:
             return

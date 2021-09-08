@@ -10,12 +10,17 @@ def get_graph_info(name: str):
     graph = cfpq_data.graph_from_dataset(name, verbose=False)
     print(f"""info about {name}:\n""")
     print(
-        f"""Nodes: {graph.number_of_nodes()}\nEdges: {graph.number_of_edges()}\nLabels: {cfpq_data.get_labels(graph, verbose=False)}""")
+        f"""Nodes: {graph.number_of_nodes()}\nEdges: {graph.number_of_edges()}\nLabels: {cfpq_data.get_labels(graph, verbose=False)}"""
+    )
     print('end of graph info\n')
 
 
-def generate_two_cycle_graph(nodes_first: int, nodes_second: int, labels: Tuple[str, str]):
-    return cfpq_data.labeled_two_cycles_graph(nodes_first, nodes_second, edge_labels=labels, verbose=False)
+def generate_two_cycle_graph(
+        nodes_first: int, nodes_second: int, labels: Tuple[str, str]
+):
+    return cfpq_data.labeled_two_cycles_graph(
+        nodes_first, nodes_second, edge_labels=labels, verbose=False
+    )
 
 
 def save_graph_dot(graph: MultiDiGraph, full_path: str):
