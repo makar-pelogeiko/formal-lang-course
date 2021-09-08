@@ -2,7 +2,8 @@ import networkx
 import pydot
 import cfpq_data
 
-import project.console_lib
+
+from project import console_lib
 
 
 def test_save_to_dot():
