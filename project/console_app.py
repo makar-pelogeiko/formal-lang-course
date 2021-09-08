@@ -50,7 +50,7 @@ def run_console_app():
             "menu list:",
             "exit",
             "get info about graph",
-            "create 2 cycles graph and save it to .DOT"
+            "create 2 cycles graph and save it to .DOT",
         ]
         element = menu(items_lst=menu_lst) - 2
         if element == -1:
