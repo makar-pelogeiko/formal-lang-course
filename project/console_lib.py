@@ -14,12 +14,6 @@ def get_graph_info(name: str):
     print('end of graph info\n')
 
 
-"""
-По количеству вершин в циклах и именам меток
-строить граф из двух циклов и сохранять его в указанный файл в формате DOT (использовать pydot).
-"""
-
-
 def generate_two_cycle_graph(nodes_first: int, nodes_second: int, labels: Tuple[str, str]):
     return cfpq_data.labeled_two_cycles_graph(nodes_first, nodes_second, edge_labels=labels, verbose=False)
 

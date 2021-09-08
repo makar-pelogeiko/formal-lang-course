@@ -2,7 +2,6 @@ import networkx
 import pydot
 import cfpq_data
 
-
 from project import console_lib
 
 
