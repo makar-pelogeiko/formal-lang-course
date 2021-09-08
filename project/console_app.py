@@ -47,10 +47,10 @@ def run_console_app():
     func_items = [call_get_info, call_generate_and_save_graph]
     while True:
         menu_lst = [
-                    "menu list:",
-                    "exit",
-                    "get info about graph",
-                    "create 2 cycles graph and save it to .DOT"
+            "menu list:",
+            "exit",
+            "get info about graph",
+            "create 2 cycles graph and save it to .DOT"
         ]
         element = menu(items_lst=menu_lst) - 2
         if element == -1:
