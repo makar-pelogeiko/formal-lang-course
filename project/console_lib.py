@@ -12,11 +12,11 @@ def get_graph_info(name: str):
     print(
         f"""Nodes: {graph.number_of_nodes()}\nEdges: {graph.number_of_edges()}\nLabels: {cfpq_data.get_labels(graph, verbose=False)}"""
     )
-    print('end of graph info\n')
+    print("end of graph info\n")
 
 
 def generate_two_cycle_graph(
-        nodes_first: int, nodes_second: int, labels: Tuple[str, str]
+    nodes_first: int, nodes_second: int, labels: Tuple[str, str]
 ):
     return cfpq_data.labeled_two_cycles_graph(
         nodes_first, nodes_second, edge_labels=labels, verbose=False
