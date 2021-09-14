@@ -8,11 +8,12 @@ import pydot
 
 def get_graph_info(name: str):
     graph = cfpq_data.graph_from_dataset(name, verbose=False)
-    print(f"""info about {name}:\n""")
-    print(
-        f"""Nodes: {graph.number_of_nodes()}\nEdges: {graph.number_of_edges()}\nLabels: {cfpq_data.get_labels(graph, verbose=False)}"""
+    return (
+        name,
+        graph.number_of_nodes(),
+        graph.number_of_edges(),
+        cfpq_data.get_labels(graph, verbose=False),
     )
-    print("end of graph info\n")
 
 
 def generate_two_cycle_graph(
