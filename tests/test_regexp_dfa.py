@@ -1,6 +1,5 @@
 from project.regexp_dfa import dfa_from_regexp
 from pyformlang.finite_automaton import DeterministicFiniteAutomaton, Symbol, State
-from pyformlang.regular_expression import Regex
 
 
 def test_correct_dfa():
