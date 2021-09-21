@@ -1,9 +1,12 @@
 antlr4-python3-runtime
-argparse
+argparse~=1.4.0
 black
 cfpq-data
-networkx
+networkx~=2.6.2
 pre-commit
-pydot
-pytest
+pydot~=1.4.2
+pyformlang~=0.1.26
+pytest~=6.2.5
+
+rdflib~=6.0.0
 scipy
