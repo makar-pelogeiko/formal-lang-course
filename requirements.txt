@@ -7,6 +7,5 @@ pre-commit
 pydot~=1.4.2
 pyformlang~=0.1.26
 pytest~=6.2.5
-
 rdflib~=6.0.0
 scipy
