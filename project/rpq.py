@@ -1,9 +1,21 @@
 import project.bool_finite_automaton as bools
 import project.graph_nfa as gr_nfa
 import project.regexp_dfa as reg_dfa
-from scipy.sparse.csgraph import floyd_warshall
-import math
 from pyformlang.finite_automaton import State
+
+
+def transitive_clause(matrix):
+    """
+
+    :param matrix: sparse matrix
+    :return: transitive clause sparse matrix
+    """
+    prev_nnz = matrix.nnz
+    curr_nnz = 0
+    while prev_nnz != curr_nnz:
+        matrix += matrix @ matrix
+        prev_nnz, curr_nnz = curr_nnz, matrix.nnz
+    return matrix
 
 
 def rpq_graph(graph, regexp, start_nodes: set = None, finale_nodes: set = None):
@@ -22,22 +34,8 @@ def rpq_graph(graph, regexp, start_nodes: set = None, finale_nodes: set = None):
     dfa_query = reg_dfa.dfa_from_regexp(regexp)
     dfa_bool_automaton = bools.BoolFiniteAutomaton.bool_matrices_from_nfa(dfa_query)
     bool_nfa = bools.BoolFiniteAutomaton.bool_matrices_from_nfa(nfa_source)
-    # answer_nfa, b_result = bool_nfa.intersect(dfa_bool_automaton)
     bresult_auto = bool_nfa.intersect(dfa_bool_automaton)
-    matrix_answer = sum(bresult_auto.bool_matrices.values())
-    # rpq_matrix = floyd_warshall(matrix_answer)
-    # floyd algo puts zeros on main diagonal, i don't know why
-    # rpq_matrix[matrix_answer.nonzero()] = 1.0
-    ###
-    # tc = sum(self.bmatrix.values())
-    prev_nnz = matrix_answer.nnz
-    curr_nnz = 0
-
-    while prev_nnz != curr_nnz:
-        matrix_answer += matrix_answer @ matrix_answer
-        prev_nnz, curr_nnz = curr_nnz, matrix_answer.nnz
-    rpq_matrix = matrix_answer
-    ###
+    rpq_matrix = transitive_clause(sum(bresult_auto.bool_matrices.values()))
     result_set = set()
     for i, j in zip(*rpq_matrix.nonzero()):
         if (

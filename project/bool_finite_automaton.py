@@ -1,5 +1,5 @@
 from scipy.sparse import kron
-from scipy.sparse import dok_matrix, lil_matrix, csr_matrix
+from scipy.sparse import dok_matrix
 from pyformlang.finite_automaton import NondeterministicFiniteAutomaton, State
 
 
