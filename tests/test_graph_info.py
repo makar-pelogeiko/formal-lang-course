@@ -41,9 +41,3 @@ def test_labels():
         rdflib.term.URIRef("http://www.w3.org/2002/07/owl#intersectionOf"),
         rdflib.term.URIRef("http://www.w3.org/2002/07/owl#versionInfo"),
     }
-
-
-test_name()
-test_nodes()
-test_edges()
-test_labels()
