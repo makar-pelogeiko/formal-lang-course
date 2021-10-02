@@ -2,7 +2,6 @@ from project import rpq as rpq
 from pyformlang.finite_automaton import NondeterministicFiniteAutomaton, State, Symbol
 import project.bool_finite_automaton as bools
 import pytest
-from networkx import MultiDiGraph
 from project import graph_utils
 
 
@@ -31,7 +30,8 @@ def test_corect_intersect_nfa_positive(simple_nfa):
     symbol_b = Symbol("b")
     bool_set = bools.BoolFiniteAutomaton.bool_matrices_from_nfa(simple_nfa)
     result_bnfa = bool_set.intersect(bool_set)
-    assert result_bnfa.nfa.accepts([symbol_a, symbol_b])
+    nfa = result_bnfa.get_nfa()
+    assert nfa.accepts([symbol_a, symbol_b])
 
 
 def test_corect_intersect_nfa_negative(simple_nfa):
@@ -39,7 +39,8 @@ def test_corect_intersect_nfa_negative(simple_nfa):
     symbol_b = Symbol("b")
     bool_set = bools.BoolFiniteAutomaton.bool_matrices_from_nfa(simple_nfa)
     result_bnfa = bool_set.intersect(bool_set)
-    assert not result_bnfa.nfa.accepts([symbol_a, symbol_b, symbol_a])
+    nfa = result_bnfa.get_nfa()
+    assert not nfa.accepts([symbol_a, symbol_b, symbol_a])
 
 
 @pytest.mark.parametrize(

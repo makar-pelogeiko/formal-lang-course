@@ -8,7 +8,8 @@ class BoolFiniteAutomaton:
         self.alphabet = {}
         self.bool_matrices = {}
         self.states_dict = {}
-        self.nfa = None
+        self.start_states = set()
+        self.final_states = set()
 
     @classmethod
     def bool_matrices_from_nfa(cls, nfa_in):
@@ -19,10 +20,7 @@ class BoolFiniteAutomaton:
         first_dict = nfa_in.to_dict()
         first_prim_keys = first_dict.keys()
         states_dict = {state: index for index, state in enumerate(nfa_in.states)}
-        temp_list = []
-        for i in first_prim_keys:
-            temp_list = temp_list + list(first_dict[i].keys())
-        alphabet = set(temp_list)
+        alphabet = nfa_in.symbols
         bool_matrices = {}
         for symbol in alphabet:
             matrix = dok_matrix((len(nfa_in.states), len(nfa_in.states)), dtype=bool)
@@ -30,7 +28,6 @@ class BoolFiniteAutomaton:
                 if symbol in set(first_dict[state].keys()):
                     if isinstance(first_dict[state][symbol], set):
                         for point in list(first_dict[state][symbol]):
-                            # matrix[int(f"""{state}"""), int(f"""{point}""")] = 1
                             matrix[states_dict[state], states_dict[point]] = True
                     else:
                         matrix[
@@ -38,11 +35,29 @@ class BoolFiniteAutomaton:
                         ] = True
             bool_matrices[symbol] = matrix
         obj = cls()
-        obj.nfa = nfa_in
+        obj.start_states = nfa_in.start_states
+        obj.final_states = nfa_in.final_states
         obj.alphabet = alphabet
         obj.bool_matrices = bool_matrices
         obj.states_dict = states_dict
         return obj
+
+    def get_nfa(self):
+        """
+        This function builds NondeterministicFiniteAutomaton from object BoolFiniteAutomaton
+        :return: NondeterministicFiniteAutomaton
+        """
+        nfa_result = NondeterministicFiniteAutomaton()
+        # create all transitions from several bool matrix
+        for symbol in self.alphabet:
+            for i, j in zip(*self.bool_matrices[symbol].nonzero()):
+                nfa_result.add_transition(State(i), symbol, State(j))
+        # find and define start states of NFA
+        for st in self.start_states:
+            nfa_result.add_start_state(st)
+        for st in self.final_states:
+            nfa_result.add_final_state(st)
+        return nfa_result
 
     def intersect(self, snd_bool_auto):
         """
@@ -58,30 +73,24 @@ class BoolFiniteAutomaton:
             result_bools[i] = kron(
                 self.bool_matrices[i], snd_bool_auto.bool_matrices[i], format="csr"
             )
-        # build a nfa from several bool matrix
-        nfa_result = NondeterministicFiniteAutomaton()
-        # create all transitions from several bool matrix
-        for symbol in result_alphabet:
-            for i, j in zip(*result_bools[symbol].nonzero()):
-                nfa_result.add_transition(State(i), symbol, State(j))
+        # build a nfa (BoolFiniteAutomaton) from several bool matrix
+        obj = BoolFiniteAutomaton()
         # find and define start states of NFA
-        for fst_start in self.nfa.start_states:
-            for snd_start in snd_bool_auto.nfa.start_states:
+        for fst_start in self.start_states:
+            for snd_start in snd_bool_auto.start_states:
                 id_fst = self.states_dict[fst_start]
                 id_snd = snd_bool_auto.states_dict[snd_start]
-                nfa_result.add_start_state(
-                    State(len(snd_bool_auto.nfa.states) * id_fst + id_snd)
+                obj.start_states.add(
+                    State(len(snd_bool_auto.states_dict) * id_fst + id_snd)
                 )
-        # find and define finale states of NFA
-        for fst_finale in self.nfa.final_states:
-            for snd_finale in snd_bool_auto.nfa.final_states:
-                id_fst = self.states_dict[fst_finale]
+        # find and define final states of NFA
+        for fst_final in self.final_states:
+            for snd_finale in snd_bool_auto.final_states:
+                id_fst = self.states_dict[fst_final]
                 id_snd = snd_bool_auto.states_dict[snd_finale]
-                nfa_result.add_final_state(
-                    State(len(snd_bool_auto.nfa.states) * id_fst + id_snd)
+                obj.final_states.add(
+                    State(len(snd_bool_auto.states_dict) * id_fst + id_snd)
                 )
-        obj = BoolFiniteAutomaton()
-        obj.nfa = nfa_result
         obj.alphabet = result_alphabet
         obj.bool_matrices = result_bools
         obj.states_dict = {
