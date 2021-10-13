@@ -51,7 +51,7 @@ class BoolFiniteAutomaton:
         nfa_result = NondeterministicFiniteAutomaton()
         # create all transitions from several bool matrix
         for symbol in self.alphabet:
-            for i, j in zip(*self.bool_matrices[symbol].to_list()):
+            for i, j in self.bool_matrices[symbol].to_list():
                 nfa_result.add_transition(State(i), symbol, State(j))
         # find and define start states of NFA
         for st in self.start_states:

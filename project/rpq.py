@@ -27,7 +27,7 @@ def rpq_graph(
     bresult_auto = bool_nfa.intersect(dfa_bool_automaton)
     rpq_matrix = matrixEngine.BoolFiniteAutomaton.transitive_closure(
         matrixEngine.BoolFiniteAutomaton.sum_matrixLst(
-            bresult_auto.bool_matrices.values()
+            list(bresult_auto.bool_matrices.values())
         )
     )
     result_set = set()
