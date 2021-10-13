@@ -26,7 +26,7 @@ def rpq_graph(graph, regexp, start_nodes: set = None, finale_nodes: set = None):
     :param regexp: string with regular expression
     :param start_nodes: set of graph nodes which will be start states in NFA
     :param finale_nodes: set of graph nodes which will be final states in NFA
-    :return: set pairs of graph nodes -  rpq answer after crossing graph and regexp
+    :return: set pairs of graph nodes - rpq answer after crossing graph and regexp
     """
     nfa_source = gr_nfa.nfa_from_graph(
         graph, start_nodes=start_nodes, finale_nodes=finale_nodes
