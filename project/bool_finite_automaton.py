@@ -98,3 +98,16 @@ class BoolFiniteAutomaton:
             for index in (0, result_bools[next(iter(result_alphabet))].shape[0])
         }
         return obj
+
+    @staticmethod
+    def transitive_closure(matrix):
+        """
+        :param matrix: sparse matrix
+        :return: transitive clause sparse matrix
+        """
+        prev_nnz = matrix.nnz
+        curr_nnz = 0
+        while prev_nnz != curr_nnz:
+            matrix += matrix @ matrix
+            prev_nnz, curr_nnz = curr_nnz, matrix.nnz
+        return matrix
