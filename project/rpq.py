@@ -4,7 +4,9 @@ import project.regexp_dfa as reg_dfa
 from pyformlang.finite_automaton import State
 
 
-def rpq_graph(graph, regexp, start_nodes: set = None, finale_nodes: set = None):
+def rpq_graph(
+    graph, regexp, start_nodes: set = None, finale_nodes: set = None, matrixEngine=bools
+):
     """
     This function crosses graph and regexp and returns pairs - start and final nodes, which can be reached in crossed
     graph
@@ -18,10 +20,12 @@ def rpq_graph(graph, regexp, start_nodes: set = None, finale_nodes: set = None):
         graph, start_nodes=start_nodes, finale_nodes=finale_nodes
     )
     dfa_query = reg_dfa.dfa_from_regexp(regexp)
-    dfa_bool_automaton = bools.BoolFiniteAutomaton.bool_matrices_from_nfa(dfa_query)
-    bool_nfa = bools.BoolFiniteAutomaton.bool_matrices_from_nfa(nfa_source)
+    dfa_bool_automaton = matrixEngine.BoolFiniteAutomaton.bool_matrices_from_nfa(
+        dfa_query
+    )
+    bool_nfa = matrixEngine.BoolFiniteAutomaton.bool_matrices_from_nfa(nfa_source)
     bresult_auto = bool_nfa.intersect(dfa_bool_automaton)
-    rpq_matrix = bools.BoolFiniteAutomaton.transitive_closure(
+    rpq_matrix = matrixEngine.BoolFiniteAutomaton.transitive_closure(
         sum(bresult_auto.bool_matrices.values())
     )
     result_set = set()
