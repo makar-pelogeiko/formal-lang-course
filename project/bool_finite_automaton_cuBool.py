@@ -132,4 +132,4 @@ class BoolFiniteAutomaton:
         :param matrix: sparse matrix
         :return: list of tuples x, y with non zero elements in given matrix
         """
-        return matrix.nvals
+        return matrix.to_list()
