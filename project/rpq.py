@@ -31,10 +31,18 @@ def rpq_graph(
         )
     )
     result_set = set()
-    for i, j in zip(*matrixEngine.BoolFiniteAutomaton.nonZeroPairs(rpq_matrix)):
+    for i, j in matrixEngine.BoolFiniteAutomaton.nonZeroPairs(rpq_matrix):
         if (
             State(i) in bresult_auto.start_states
             and State(j) in bresult_auto.final_states
         ):
             result_set.add((i // len(dfa_query.states), j // len(dfa_query.states)))
     return result_set
+
+
+from project import graph_utils
+
+rpq_graph(
+    graph_utils.generate_two_cycle_graph(2, 3, ("a", "b")),
+    "a b*",
+)

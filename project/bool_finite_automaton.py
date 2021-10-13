@@ -126,4 +126,7 @@ class BoolFiniteAutomaton:
         :param matrix: sparse matrix
         :return: list of tuples x, y with non zero elements in given matrix
         """
-        return matrix.nonzero()
+        lst = []
+        for i, j in zip(*matrix.nonzero()):
+            lst.append((i, j))
+        return lst
