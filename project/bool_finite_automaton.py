@@ -111,3 +111,19 @@ class BoolFiniteAutomaton:
             matrix += matrix @ matrix
             prev_nnz, curr_nnz = curr_nnz, matrix.nnz
         return matrix
+
+    @staticmethod
+    def sum_matrixLst(matrix_lst):
+        """
+        :param matrix_lst: list of sparse matrices
+        :return: sparse matrix sum of matrix_lst
+        """
+        return sum(matrix_lst)
+
+    @staticmethod
+    def nonZeroPairs(matrix):
+        """
+        :param matrix: sparse matrix
+        :return: list of tuples x, y with non zero elements in given matrix
+        """
+        return matrix.nonzero()

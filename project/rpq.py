@@ -26,10 +26,12 @@ def rpq_graph(
     bool_nfa = matrixEngine.BoolFiniteAutomaton.bool_matrices_from_nfa(nfa_source)
     bresult_auto = bool_nfa.intersect(dfa_bool_automaton)
     rpq_matrix = matrixEngine.BoolFiniteAutomaton.transitive_closure(
-        sum(bresult_auto.bool_matrices.values())
+        matrixEngine.BoolFiniteAutomaton.sum_matrixLst(
+            bresult_auto.bool_matrices.values()
+        )
     )
     result_set = set()
-    for i, j in zip(*rpq_matrix.nonzero()):
+    for i, j in zip(*matrixEngine.BoolFiniteAutomaton.nonZeroPairs(rpq_matrix)):
         if (
             State(i) in bresult_auto.start_states
             and State(j) in bresult_auto.final_states
