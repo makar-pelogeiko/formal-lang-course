@@ -1,3 +1,5 @@
+import sys
+
 import project.console
 from project.console import *
 
@@ -12,6 +14,10 @@ from project.graph_nfa import *
 
 import project.bool_finite_automaton
 from project.bool_finite_automaton import *
+
+if sys.platform.startswith("linux"):
+    import project.bool_finite_automaton_cuBool
+    from project.bool_finite_automaton_cuBool import *
 
 import project.rpq
 from project.rpq import *
