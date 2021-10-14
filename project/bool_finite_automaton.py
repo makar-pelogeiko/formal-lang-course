@@ -68,8 +68,9 @@ class BoolFiniteAutomaton:
         """
         result_bools = {}
         result_alphabet = self.alphabet & snd_bool_auto.alphabet
+
         if not result_alphabet:
-            return snd_bool_auto
+            raise Exception("empty alhabet")
         # not a list, but a dictionary
         for i in result_alphabet:
             result_bools[i] = kron(
@@ -97,7 +98,7 @@ class BoolFiniteAutomaton:
         obj.bool_matrices = result_bools
         obj.states_dict = {
             State(index): index
-            for index in (0, result_bools[next(iter(result_alphabet))].shape[0])
+            for index in (0, list(result_bools.values())[0].shape[0])
         }
         return obj
 
