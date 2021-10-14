@@ -68,6 +68,8 @@ class BoolFiniteAutomaton:
         """
         result_bools = {}
         result_alphabet = self.alphabet & snd_bool_auto.alphabet
+        if not result_alphabet:
+            return snd_bool_auto
         # not a list, but a dictionary
         for i in result_alphabet:
             result_bools[i] = kron(
