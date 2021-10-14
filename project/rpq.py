@@ -26,23 +26,15 @@ def rpq_graph(
     bool_nfa = matrixEngine.BoolFiniteAutomaton.bool_matrices_from_nfa(nfa_source)
     bresult_auto = bool_nfa.intersect(dfa_bool_automaton)
     rpq_matrix = matrixEngine.BoolFiniteAutomaton.transitive_closure(
-        matrixEngine.BoolFiniteAutomaton.sum_matrixLst(
+        matrixEngine.BoolFiniteAutomaton.sum_matrix_lst(
             list(bresult_auto.bool_matrices.values())
         )
     )
     result_set = set()
-    for i, j in matrixEngine.BoolFiniteAutomaton.nonZeroPairs(rpq_matrix):
+    for i, j in matrixEngine.BoolFiniteAutomaton.nonzero_pairs(rpq_matrix):
         if (
             State(i) in bresult_auto.start_states
             and State(j) in bresult_auto.final_states
         ):
             result_set.add((i // len(dfa_query.states), j // len(dfa_query.states)))
     return result_set
-
-
-from project import graph_utils
-
-rpq_graph(
-    graph_utils.generate_two_cycle_graph(2, 3, ("a", "b")),
-    "a b*",
-)

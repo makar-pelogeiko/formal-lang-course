@@ -5,7 +5,7 @@ import pytest
 from project import graph_utils
 
 if sys.platform.startswith("linux"):
-    import project.bool_finite_automaton_cuBool as bools
+    import project.bool_finite_automaton_cubool as bools
 else:
     pytest.skip("skipping ubuntu-only tests", allow_module_level=True)
 

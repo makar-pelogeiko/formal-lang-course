@@ -120,7 +120,7 @@ class BoolFiniteAutomaton:
         return matrix
 
     @staticmethod
-    def sum_matrixLst(matrix_lst):
+    def sum_matrix_lst(matrix_lst):
         """
         :param matrix_lst: list of sparse matrices
         :return: sparse matrix sum of matrix_lst
@@ -128,7 +128,7 @@ class BoolFiniteAutomaton:
         return sum(matrix_lst)
 
     @staticmethod
-    def nonZeroPairs(matrix):
+    def nonzero_pairs(matrix):
         """
         :param matrix: sparse matrix
         :return: list of tuples x, y with non zero elements in given matrix

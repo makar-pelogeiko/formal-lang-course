@@ -115,12 +115,13 @@ class BoolFiniteAutomaton:
         prev_nnz = matrix.nvals
         curr_nnz = 0
         while prev_nnz != curr_nnz:
-            matrix = matrix.ewiseadd(matrix.mxm(matrix))
+            matrix = matrix.mxm(matrix, out=matrix, accumulate=True)
+            # matrix = matrix.ewiseadd(matrix.mxm(matrix))
             prev_nnz, curr_nnz = curr_nnz, matrix.nvals
         return matrix
 
     @staticmethod
-    def sum_matrixLst(matrix_lst):
+    def sum_matrix_lst(matrix_lst):
         """
         :param matrix_lst: list of sparse matrices
                             !List must contain at least 1 matrix!
@@ -133,7 +134,7 @@ class BoolFiniteAutomaton:
         return resultMatrix
 
     @staticmethod
-    def nonZeroPairs(matrix):
+    def nonzero_pairs(matrix):
         """
         :param matrix: sparse matrix
         :return: list of tuples x, y with non zero elements in given matrix
