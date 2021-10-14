@@ -4,6 +4,10 @@ from pyformlang.finite_automaton import NondeterministicFiniteAutomaton, State
 
 
 class BoolFiniteAutomaton:
+    """
+    :raise Exception("empty alphabet") if intersection alphabet is empty
+    """
+
     def __init__(self):
         self.alphabet = {}
         self.bool_matrices = {}
