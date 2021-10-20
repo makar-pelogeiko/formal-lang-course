@@ -15,3 +15,6 @@ from project.bool_finite_automaton import *
 
 import project.rpq
 from project.rpq import *
+
+import project.cfg.cfg_normal_form
+from project.cfg.cfg_normal_form import *
