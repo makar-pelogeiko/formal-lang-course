@@ -13,7 +13,12 @@ def cfg_to_cnf(cfg: CFG) -> CFG:
     cnf = cfg.to_normal_form()
     if cfg.generate_epsilon():
         cnf._productions.add(Production(cnf.start_symbol, []))
-    if cnf.generate_epsilon() == False:
+    if (
+        (cnf.is_empty() == True)
+        and (cfg.is_empty() == False)
+        and (cnf.generate_epsilon() == False)
+        and (cfg.generate_epsilon() == True)
+    ):
         cnf = CFG.from_text(
             f"""{cfg.start_symbol} -> epsilon""", start_symbol=cfg.start_symbol
         )
