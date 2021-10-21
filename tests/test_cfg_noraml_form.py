@@ -60,6 +60,18 @@ def test_accept_word(text_cfg, word_accepted):
     assert cnf.contains(word_accepted) and cfg.contains(word_accepted)
 
 
+@pytest.mark.parametrize(
+    "text_cfg,word_accepted",
+    [
+        ("S -> epsilon", []),
+    ],
+)
+def test_accept_bug_word_(text_cfg, word_accepted):
+    cfg = CFG.from_text(text_cfg, start_symbol="S")
+    cnf = cfg_normal_form.cfg_to_cnf(cfg)
+    assert cfg.contains(word_accepted) == cnf.contains(word_accepted)
+
+
 # cfg_normal_form.cfg_from_file() test
 @pytest.mark.parametrize(
     "text_cfg,productions_expected",
