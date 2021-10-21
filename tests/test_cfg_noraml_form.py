@@ -11,7 +11,7 @@ from project.cfg import cfg_normal_form
         ("S -> a b | a S"),
         (
             """S -> a S | b S | F
-                F -> c S | d"""
+                    F -> c S | d"""
         ),
     ],
 )
@@ -27,7 +27,7 @@ def test_normal_form_non_epsilon(text_cfg):
         ("S -> a b | epsilon"),
         (
             """S -> a S | b S | F
-                F -> c S | epsilon"""
+                    F -> c S | epsilon"""
         ),
     ],
 )
@@ -44,32 +44,21 @@ def test_normal_form_with_epsilon(text_cfg):
         ("S -> a b", [Terminal("a"), Terminal("b")]),
         (
             """S -> a S | F
-                F -> b S | epsilon""",
+                    F -> b S | epsilon""",
             [Terminal("b"), Terminal("a")],
         ),
         (
             """S -> a S | F
-                F -> b S | epsilon""",
+                    F -> b S | epsilon""",
             [],
         ),
+        ("S -> epsilon", []),
     ],
 )
 def test_accept_word(text_cfg, word_accepted):
     cfg = CFG.from_text(text_cfg, start_symbol="S")
     cnf = cfg_normal_form.cfg_to_cnf(cfg)
     assert cnf.contains(word_accepted) and cfg.contains(word_accepted)
-
-
-@pytest.mark.parametrize(
-    "text_cfg,word_accepted",
-    [
-        ("S -> epsilon", []),
-    ],
-)
-def test_accept_bug_word_(text_cfg, word_accepted):
-    cfg = CFG.from_text(text_cfg, start_symbol="S")
-    cnf = cfg_normal_form.cfg_to_cnf(cfg)
-    assert cfg.contains(word_accepted) == cnf.contains(word_accepted)
 
 
 # cfg_normal_form.cfg_from_file() test
@@ -80,7 +69,7 @@ def test_accept_bug_word_(text_cfg, word_accepted):
         ("S -> a b", {Production(Variable("S"), [Terminal("a"), Terminal("b")])}),
         (
             """S -> a S | F
-                F -> b S | epsilon""",
+                    F -> b S | epsilon""",
             {
                 Production(Variable("S"), [Variable("F")]),
                 Production(Variable("S"), [Terminal("a"), Variable("S")]),
