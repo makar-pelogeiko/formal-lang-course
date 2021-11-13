@@ -4,7 +4,7 @@ from project import graph_utils
 
 pytestmark = pytest.mark.skip("github workflow can't run these tests, run it local")
 
-my_graph = graph_utils.get_graph_info("travel")
+# my_graph = graph_utils.get_graph_info("travel")
 
 
 def test_name():
