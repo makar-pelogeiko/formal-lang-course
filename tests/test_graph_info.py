@@ -3,7 +3,7 @@ import pytest
 from project import graph_utils
 
 pytestmark = pytest.mark.skip("github workflow can't run these tests, run it local")
-
+# uncomment this
 # my_graph = graph_utils.get_graph_info("travel")
 
 
