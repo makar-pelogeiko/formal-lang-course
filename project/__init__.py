@@ -18,3 +18,6 @@ from project.rpq import *
 
 import project.cfg.cfg_normal_form
 from project.cfg.cfg_normal_form import *
+
+import project.cyk_algo
+from project.cyk_algo import *
