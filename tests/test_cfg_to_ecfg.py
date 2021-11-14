@@ -10,15 +10,15 @@ from project.regexp_dfa import dfa_from_regexp
     "cfg, expect_prod",
     [
         (
-            "S -> epsilon",
-            {Variable("S"): Regex("#epsilon#")},
+            """
+                        S -> a S b
+                        S -> epsilon
+                    """,
+            {Variable("S"): Regex("(a S b) | #epsilon#")},
         ),
         (
-            """
-                    S -> a S b
-                    S -> epsilon
-                """,
-            {Variable("S"): Regex("(a S b) | #epsilon#")},
+            "S -> epsilon",
+            {Variable("S"): Regex("#epsilon#")},
         ),
     ],
 )
@@ -28,9 +28,15 @@ def test_cfg_to_ecfg_correct_productions(cfg, expect_prod):
     for key in ecfg.productions.keys():
         e_prod = ecfg.productions[key]
         # Can not simply compare Regex(), so will compare nfa equivalent to Regex
-        dfa_exp = dfa_from_regexp(expect_prod[key])
-        dfa_occur = dfa_from_regexp(e_prod.body)
-        equiv = dfa_exp.is_equivalent_to(dfa_occur)
+        # Regexp are always same as strings
+        for i in range(5):
+            dfa_exp = dfa_from_regexp(expect_prod[key])
+            dfa_occur = dfa_from_regexp(e_prod.body)
+            equiv = dfa_exp.is_equivalent_to(dfa_occur)
+            if equiv:
+                break
+        if not equiv:
+            assert str(expect_prod[key]) == str(e_prod.body)
         assert key == e_prod.head and equiv
 
     assert expect_prod.keys() == ecfg.productions.keys()
