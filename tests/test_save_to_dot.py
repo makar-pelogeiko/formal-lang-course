@@ -3,6 +3,7 @@ import pydot
 import cfpq_data
 import pytest
 from project import graph_utils
+from networkx.classes.reportviews import NodeView
 
 # pytestmark = pytest.mark.skip("github workflow can't run these tests, run it local")
 # uncomment this
@@ -13,6 +14,7 @@ dot_graph = pydot.graph_from_dot_file("tests/data/graph1.dot")[0]
 
 def test_nodes():
     nx_graph = networkx.drawing.nx_pydot.from_pydot(dot_graph)
+    assert nx_graph.nodes == NodeView((1, 2, 0, 3, 4, 5, 777))
     assert nx_graph.number_of_nodes() == 6
 
 
