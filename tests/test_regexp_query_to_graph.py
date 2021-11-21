@@ -4,7 +4,7 @@ import project.bool_finite_automaton as bools
 import pytest
 from project import graph_utils
 
-pytestmark = pytest.mark.skip("github workflow can't run these tests, run it local")
+# pytestmark = pytest.mark.skip("github workflow can't run these tests, run it local")
 # can not generate 2 cycle graph
 
 
