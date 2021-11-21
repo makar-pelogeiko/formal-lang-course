@@ -1,7 +1,8 @@
 import pytest
 from pyformlang.cfg import CFG, Variable
 from project import generate_two_cycle_graph
-from project.hellings_algo import cfpq
+from project.cfpq_utils.cfpq_algo import cfpq
+from project.cfpq_utils.hellings_algo import hellings
 from cfpq_data import labeled_cycle_graph
 from networkx import MultiDiGraph
 
@@ -53,8 +54,8 @@ graph_simple.add_edge(1, 1, label="b")
         ),
     ],
 )
-def test_cfpq_t(cfg_text, graph, start_var, start_nodes, fin_nodes, expect_set):
+def test_cfpq(cfg_text, graph, start_var, start_nodes, fin_nodes, expect_set):
     cfg = CFG.from_text(cfg_text)
-    result = cfpq(graph, cfg, start_var, start_nodes, fin_nodes)
+    result = cfpq(graph, cfg, start_var, start_nodes, fin_nodes, engine=hellings)
 
     assert expect_set == result

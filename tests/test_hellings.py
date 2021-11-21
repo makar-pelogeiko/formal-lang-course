@@ -1,6 +1,6 @@
 import pytest
 from pyformlang.cfg import CFG
-from project.hellings_algo import hellings
+from project.cfpq_utils.hellings_algo import hellings
 from project.graph_utils import generate_two_cycle_graph
 from cfpq_data import labeled_cycle_graph
 from networkx import MultiDiGraph

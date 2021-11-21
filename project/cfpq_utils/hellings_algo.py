@@ -1,8 +1,10 @@
 """Hellings algorithm"""
-from pyformlang.cfg import CFG, Variable
+from pyformlang.cfg import CFG
 from typing import Set, Tuple
 from networkx import MultiDiGraph
 from project.cfg.cfg_normal_form import cfg_to_cnf
+
+__all__ = ["hellings"]
 
 
 def hellings(graph: MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
@@ -67,28 +69,3 @@ def hellings(graph: MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
         add_temp_set.clear()
 
     return r
-
-
-def cfpq(
-    graph: MultiDiGraph,
-    cfg: CFG,
-    start_symbol: Variable = Variable("S"),
-    start_nodes: Set[int] = None,
-    final_nodes: Set[int] = None,
-) -> Set[Tuple[int, int]]:
-    """Context Free Path Querying with Hellings Algorithm"""
-    cfg._start_symbol = start_symbol
-    wcnf = cfg_to_cnf(cfg)
-
-    result_pairs = {
-        (i, j)
-        for i, symbol, j in hellings(graph, wcnf)
-        if symbol == wcnf.start_symbol.value
-    }
-
-    if start_nodes:
-        result_pairs = {(i, j) for i, j in result_pairs if i in start_nodes}
-    if final_nodes:
-        result_pairs = {(i, j) for i, j in result_pairs if j in final_nodes}
-
-    return result_pairs
