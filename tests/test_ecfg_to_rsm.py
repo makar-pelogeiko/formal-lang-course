@@ -24,7 +24,7 @@ def test_boxes_regex_equality(ecfg_text):
     rsm_start_symbol = rsm.start_symbol
     assert rsm_start_symbol == ecfg_start_symbol
     for key in rsm.boxes.keys():
-        assert rsm.boxes[key].variable == key
+        # assert rsm.boxes[key].variable == key
         assert rsm.boxes[key].dfa.is_equivalent_to(
-            dfa_from_regexp(ecfg.productions[key].body)
+            dfa_from_regexp(ecfg.productions[rsm.boxes[key].variable].body)
         )
