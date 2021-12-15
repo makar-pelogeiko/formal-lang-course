@@ -15,7 +15,7 @@ val =
   | CFG of cfg                   // Для хранения именно КС грамматики (вообще запрос просто строка, но для реализации может быть польезно именно кс,
                                  // хотя надо явно указывать, что запрос именно кс)
 
-var = 
+var =
     Val of val
   | Name of string
   | NameAddresed of string * Set<int>
@@ -56,7 +56,7 @@ listops =
       Pipe of op * listops
     | Emptylst
 
-op = 
+op =
       Contains of val * Set<val>   // value in [1, 2, 3]
     | Var of var                   // value
     | Mult of var * var            // value1 * value2
@@ -66,12 +66,11 @@ op =
 ## Конкретный синтаксис
 ```
 prog -> stm | stm "\n" prog
-
 stmt -> "let" var "=" expr
 stmt -> "print" expr
 
 var -> lexem | lexem addr
-addr -> "[" int "]" | "[" int "]" addr 
+addr -> "[" int "]" | "[" int "]" addr
 
 val -> int | string
 
@@ -104,7 +103,7 @@ Smb -> "(step" expr ")"
 
 lambda -> "fun ( " var ") -> " listops
 
-listops -> op "; " listops | op ";" 
+listops -> op "; " listops | op ";"
 
 op -> var " in " expr | var | var " * " var | var " + " var
 ```
@@ -114,7 +113,7 @@ op -> var " in " expr | var | var " * " var | var " + " var
 let g1 = load graph 'wine'                // загрузка графа
 let g1 = load graph from 'home/wine.dot'  // загрузка графа из файла
 
-let g = set start of (set finals of (g1) to (get vertices of (g1) )) to {0, 1, 2, 3,} 
+let g = set start of (set finals of (g1) to (get vertices of (g1) )) to {0, 1, 2, 3,}
 // все вершины стартовые и финальные
 
 let l1 = "l1" || "l2" // создание запроса (или)
