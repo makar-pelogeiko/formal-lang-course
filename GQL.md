@@ -110,33 +110,33 @@ op -> var " in " expr | var | var " * " var | var " + " var
 
 ## Скрипт
 ```
-let g1 = load graph 'wine'                // загрузка графа
-let g1 = load graph from 'home/wine.dot'  // загрузка графа из файла
+let Ig1 = load graph 'wine'                // загрузка графа
+let Ig1 = load graph from 'home/wine.dot'  // загрузка графа из файла
 
-let g = set start of (set finals of (g1) to (get vertices of (g1) )) to {0, 1, 2, 3,}
+let Ig = set start of (set finals of (Ig1) to (get vertices of (Ig1) )) to {0, 1, 2, 3,}
 // все вершины стартовые и финальные
 
-let l1 = "l1" || "l2" // создание запроса (или)
+let Il1 = "l1" || "l2" // создание запроса (или)
 
-let query1 = ("type" || l1)** // создание запроса (или + звезда клини)
-let query2 = "sub_class_of" .. l1 // создание запроса (конкатенация)
+let Iquery1 = ("type" || Il1)** // создание запроса (или + звезда клини)
+let Iquery2 = "sub_class_of" .. Il1 // создание запроса (конкатенация)
 
-let res1 = g && query1  // выполнение запроса 1
-let res2 = g && query2  // выполнение запроса 2
+let Ires1 = Ig && Iquery1  // выполнение запроса 1
+let Ires2 = Ig && Iquery2  // выполнение запроса 2
 
-print res1  // печать рещультата (всего объекта)
+print Ires1  // печать рещультата (всего объекта)
 
-let s = get starts of (g) // получение стартовых вершин
+let Is = get starts of (Ig) // получение стартовых вершин
 
-let vertices1 = filter (fun (v) -> v in s)(map (fun (edge) -> edge[0])(get edges of (res1) ))
+let Ivertices1 = filter (fun (Iv) -> Iv in Is)(map (fun (Iedge) -> Iedge[0])(get edges of (Ires1) ))
 //получение только вершин, которые стартовые и являются началами некоторых путей
 
-let vertices2 = filter (fun (v) -> v in s)(map (fun (edge) -> edge[0])(get edges of (res2) ))
+let Ivertices2 = filter (fun (Iv) -> Iv in Is)(map (fun (Iedge) -> Iedge[0])(get edges of (Ires2) ))
 //получение только вершин, которые стартовые и являются началами некоторых путей
 
-let vertices = vertices1 && vertices2 // общие вершины обоих запросов
+let Ivertices = Ivertices1 && Ivertices2 // общие вершины обоих запросов
 
-print vertices // вывод сета общих вершин
+print Ivertices // вывод сета общих вершин
 ```
 
 ## Правила вывода типов
