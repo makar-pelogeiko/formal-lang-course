@@ -1,10 +1,5 @@
-import sys
 import pytest
-
-if sys.platform.startswith("linux"):
-    from project.parser.parser_invoker import *
-else:
-    pytest.skip("skipping ubuntu-only tests", allow_module_level=True)
+from project.parser.parser_invoker import *
 
 
 def test_load_text():
