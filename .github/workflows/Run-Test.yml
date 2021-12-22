@@ -59,7 +59,12 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
-              antlr4 -Dlanguage=Python3 ./project/parser/grammarGQL.g4 -visitor -o ./project/parser/dist
+              cd project/parser
+              antlr4 -Dlanguage=Python3 grammarGQL.g4 -visitor -o dist
+              ls
+              cd dist
+              ls
+              cd ../../..
               pwd
               
           elif [ "$RUNNER_OS" == "Windows" ]; then
