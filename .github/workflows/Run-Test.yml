@@ -61,16 +61,34 @@ jobs:
           if [ "$RUNNER_OS" == "Linux" ]; then
               cd project/parser
               antlr4 -Dlanguage=Python3 grammarGQL.g4 -visitor -o dist
+              echo "grammar directory after building"
               ls
               cd dist
+              echo "generated files"
               ls
               cd ../../..
               pwd
               
           elif [ "$RUNNER_OS" == "Windows" ]; then
-              antlr4 -Dlanguage=Python3 ./project/parser/grammarGQL.g4 -visitor -o ./project/parser/dist
+              cd project\parser
+              antlr4 -Dlanguage=Python3 grammarGQL.g4 -visitor -o dist
+              echo "grammar directory after building"
+              dir
+              cd dist
+              echo "generated files"
+              dir
+              cd ../../..
+              echo %cd%
           else
-              antlr -Dlanguage=Python3 ./project/parser/grammarGQL.g4 -visitor -o ./project/parser/dist
+              cd project/parser
+              antlr -Dlanguage=Python3 grammarGQL.g4 -visitor -o dist
+              echo "grammar directory after building"
+              ls
+              cd dist
+              echo "generated files"
+              ls
+              cd ../../..
+              pwd
           fi
           
       # Run tests from /tests directory
