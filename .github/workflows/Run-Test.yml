@@ -70,15 +70,15 @@ jobs:
               pwd
               
           elif [ "$RUNNER_OS" == "Windows" ]; then
-              cd project\parser
+              cd project/parser
               antlr4 -Dlanguage=Python3 grammarGQL.g4 -visitor -o dist
               echo "grammar directory after building"
-              dir
+              ls
               cd dist
               echo "generated files"
-              dir
+              ls
               cd ../../..
-              echo %cd%
+              pwd
           else
               cd project/parser
               antlr -Dlanguage=Python3 grammarGQL.g4 -visitor -o dist
