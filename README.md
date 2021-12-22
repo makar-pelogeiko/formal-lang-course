@@ -39,16 +39,27 @@
 ## Установка и настройка
 
 - скачать иходные файлы и перейти в корневой каталог проекта:
-	```git clone https://github.com/makar-pelogeiko/formal-lang-course.git
-	cd formal-lang-course```
-- Установить необходимые python пакеты ``pip3 install -r requirements.txt````.
+	```
+	git clone https://github.com/makar-pelogeiko/formal-lang-course.git
+	cd formal-lang-course
+	```
+- Установить необходимые python пакеты:
+	```
+	pip3 install -r requirements.txt
+	````
 - Установить Java и antl4:
-	```sudo apt-get install default-jdk
-	sudo apt-get install antlr4```
+	```
+	sudo apt-get install default-jdk
+	sudo apt-get install antlr4
+	```
 - перейти в директорию парсера:
-	```cd project/parser```
+	```
+	cd project/parser
+	```
 - постройить модули грамматики:
-	```antlr4 -Dlanguage=Python3 grammarGQL.g4 -visitor -o dist```
+	```
+	antlr4 -Dlanguage=Python3 grammarGQL.g4 -visitor -o dist
+	```
 
 ## Домашние практические работы
 
