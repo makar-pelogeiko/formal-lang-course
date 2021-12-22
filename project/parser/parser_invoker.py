@@ -23,5 +23,16 @@ def parse_to_string(line):
     return tree.toStringTree(recog=parser)
 
 
+def is_in_grammar(line):
+    lexer = grammarGQLLexer(InputStream(line))
+    stream = CommonTokenStream(lexer)
+    parser = grammarGQLParser(stream)
+    tree = parser.prog()
+    if parser.getNumberOfSyntaxErrors() > 0:
+        return False
+    else:
+        return True
+
+
 if __name__ == "__main__":
     main(sys.argv)
