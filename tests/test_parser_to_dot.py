@@ -11,7 +11,7 @@ let Iquery1 = ('type' || Il1)**\n"""
     status = write_to_dot(line, path)
     obtained = open(path, "r")
 
-    path_expected = "D:\\projects\\gitproj\\formal-lang-course\\tests\data\\parsed_grammar_expected.dot"
+    path_expected = "tests\data\\parsed_grammar_expected.dot"
     expected = open(path_expected, "r")
     assert (expected.read() == obtained.read()) and status
 
