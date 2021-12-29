@@ -1,7 +1,7 @@
 import pytest
 from project.parser.parser_invoker import write_to_dot
 
-path = "D:\\projects\\gitproj\\formal-lang-course\\tests\data\\parsed_grammar.dot"
+path = "tests\data\\parsed_grammar.dot"
 
 
 def test_write_to_dot():
