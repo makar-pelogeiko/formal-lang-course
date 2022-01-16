@@ -3,7 +3,10 @@ from pyformlang.cfg import CFG, Variable
 from typing import Set, Tuple, Callable
 from networkx import MultiDiGraph
 from project.cfg.cfg_normal_form import cfg_to_cnf
+
+from project.cfpq_utils.hellings_algo import hellings
 from project.cfpq_utils.matrix_algo import matrix_based
+
 
 __all__ = ["cfpq"]
 
@@ -14,7 +17,7 @@ def cfpq(
     start_symbol: Variable = Variable("S"),
     start_nodes: Set[int] = None,
     final_nodes: Set[int] = None,
-    engine: Callable[[MultiDiGraph, CFG], Set[Tuple[int, str, int]]] = matrix_based,
+    engine: Callable[[MultiDiGraph, CFG], Set[Tuple[int, str, int]]] = hellings,
 ) -> Set[Tuple[int, int]]:
     """Context Free Path Querying with specific algorithm"""
     cfg._start_symbol = start_symbol
