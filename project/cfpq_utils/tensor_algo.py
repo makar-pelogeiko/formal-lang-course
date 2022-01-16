@@ -12,7 +12,7 @@ from project.rsm_utils.bool_rsm_automaton import BoolRSMAutomaton
 __all__ = ["tensor_based"]
 
 
-def tensor_based(graph: MultiDiGraph, cfg: CFG) -> set[Tuple[int, str, int]]:
+def tensor_based(graph: MultiDiGraph, cfg: CFG) -> Set[Tuple[int, str, int]]:
     """Context Free Grammar path querying algorithm. RSM & kroneker version"""
     rsm = ecfg_to_rsm(cfg_to_ecfg(cfg))
     rsm_vars = {box.variable.value for box in rsm.boxes.values()}
