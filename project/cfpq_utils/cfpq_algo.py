@@ -1,4 +1,4 @@
-"""Hellings algorithm"""
+"""Common cfpq function"""
 from pyformlang.cfg import CFG, Variable
 from typing import Set, Tuple, Callable
 from networkx import MultiDiGraph
