@@ -24,6 +24,7 @@ def cfg_to_ecfg(cfg: CFG):
         if production.body:
             body_str = " ".join(body_lst)
         else:
+            # TODO: body_str = "" - try this or this body_str = "#epsilon#"
             body_str = ""
 
         body = Regex(body_str)
