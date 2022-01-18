@@ -1,9 +1,12 @@
-"""Hellings algorithm"""
+"""Common cfpq function"""
 from pyformlang.cfg import CFG, Variable
 from typing import Set, Tuple, Callable
 from networkx import MultiDiGraph
 from project.cfg.cfg_normal_form import cfg_to_cnf
+
 from project.cfpq_utils.hellings_algo import hellings
+from project.cfpq_utils.matrix_algo import matrix_based
+
 
 __all__ = ["cfpq"]
 
