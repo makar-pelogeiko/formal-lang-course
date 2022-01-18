@@ -6,6 +6,8 @@ from project.ecfg_utils.ecfg_production import ECFGProduction
 from project.regexp_dfa import dfa_from_regexp
 from project.rsm_utils.rsm import RSM
 from project.rsm_utils.rsm_box import Box
+from pyformlang.finite_automaton import State
+from pyformlang.finite_automaton import Symbol
 
 
 def cfg_to_ecfg(cfg: CFG):
@@ -22,7 +24,8 @@ def cfg_to_ecfg(cfg: CFG):
         if production.body:
             body_str = " ".join(body_lst)
         else:
-            body_str = "#epsilon#"
+            # TODO: body_str = "" - try this or this body_str = "#epsilon#"
+            body_str = ""
 
         body = Regex(body_str)
 
@@ -41,8 +44,12 @@ def cfg_to_ecfg(cfg: CFG):
 def ecfg_to_rsm(ecfg: ECFG) -> RSM:
     """Convert an Extended Context Free Grammar to a Recursive State Machine"""
     boxes = dict()
-    for production in ecfg.productions.values():
-        boxes[production.head] = Box(production.head, dfa_from_regexp(production.body))
+    for id, production in enumerate(ecfg.productions.values()):
+        dfa = dfa_from_regexp(production.body)
+        if dfa.is_empty():
+            dfa.add_start_state(State(0))
+            dfa.add_final_state(State(0))
+        boxes[id] = Box(production.head, dfa)
 
     return RSM(start_symbol=ecfg.start_symbol, boxes=boxes)
 
