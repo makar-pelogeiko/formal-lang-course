@@ -31,10 +31,10 @@ setElem
 expr
     : var
     | val
-    | set_start
-    | set_final
-    | add_start
-    | add_final
+    | set_start expr ') to' expr
+    | set_final expr ') to' expr
+    | add_start expr ') to' expr
+    | add_final expr ') to' expr
     | get_start
     | get_final
     | get_reachable
@@ -48,19 +48,18 @@ expr
     | expr concat expr
     | expr union expr
     | star
-    | smb
+    | setVal
     ;
 
 intersect:  '&&';
 concat: '..';
 union:  '||';
 star:   '(' expr ')**';
-smb:    '(step' expr ')';
 
-set_start: 'set start of (' expr ') to' var;
-set_final: 'set final of (' expr ') to' var;
-add_start: 'add start of (' expr ') to' var;
-add_final: 'add final of (' expr ') to' var;
+set_start: 'set start of (';
+set_final: 'set final of (';
+add_start: 'add start of (';
+add_final: 'add final of (';
 
 get_start: 'get starts of (' expr ')';
 get_final: 'get finals of (' expr ')';
@@ -80,21 +79,21 @@ load
 path:   STRING;
 
 
-lambdasys: 'fun (' var ') ->' listops;
-listops
-    : op ';' listops
-    | op
-    ;
+lambdasys: 'fun (' var ') ->' op;
+
+inop:  'in';
+multop: '*';
+plusop:  '+';
 
 op
-    : var 'in' expr
-    | var '*' var
-    | var '+' var
-    | var
+    : var inop expr
+    | (var | val) multop (var | val)
+    | (var | val) plusop (var | val)
+    | (var | val)
     ;
 
 NEWLINE     : [\r\n]+ ;
 INT         : [0-9]+ ;
-IDENTIFIER  : 'I' [A-Za-z0-9]+ ;
+IDENTIFIER  : [A-Za-z0-9]+ ;
 STRING      : '\'' ~('\'')+ '\'';
 WS          :   [ \t\r\n]+ -> skip;
