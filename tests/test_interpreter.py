@@ -67,7 +67,7 @@ def test_multiple_functions(input_, expect_output):
     test_interp.run_query(
         "let Ig1 = load graph 'D:\\projects\\gitproj\\formal-lang-course\\tests\\data\\graph1.dot'\n"
     )
-    test_interp.run_query("let Ig1 = load graph 'tests\\data\\graph1.dot'\n")
+    test_interp.run_query("let Ig1 = load graph 'tests/data/graph1.dot'\n")
 
     test_interp.run_query("let Ig2 = set start of (Ig1) to get starts of ( Ig1 )\n")
     test_interp.run_query("let st = get finals of (Ig1)\n")
