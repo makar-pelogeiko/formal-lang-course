@@ -84,13 +84,6 @@ print filter (fun (df) -> df[1] in {0,})(filter (fun (df) -> df[0] in {1, 2,})(f
         ),
         (
             """let Ig1 = load graph 'tests/data/graph1.dot'\n
-let ff = get reachable of (Ig1)\n
-print get starts of (Ig1)\n""",
-            [">>>{0;1;2;3;4;5}"],
-        ),
-        (
-            """let Ig1 = load graph 'tests/data/graph1.dot'\n
-let ff = get reachable of (Ig1)\n
 print filter (fun (df) -> df in {'0',})(get finals of (Ig1))\n""",
             [">>>{'0'}"],
         ),
@@ -162,5 +155,22 @@ def test_errors(input_, expect_output):
     test_interp = GQLInterpreter()
     test_interp.run_query(input_)
     answer = test_interp.out_log_list
+
+    assert answer == expect_output
+
+
+@pytest.mark.parametrize(
+    "input_, expect_output",
+    [
+        (
+            "print get starts of (load graph 'tests/data/graph1.dot')\n",
+            ">>>{0;1;2;3;4;5}",
+        ),
+    ],
+)
+def test_multi_single_command(input_, expect_output):
+    test_interp = GQLInterpreter()
+    test_interp.run_query(input_)
+    answer = test_interp.visitor.output_logger
 
     assert answer == expect_output
