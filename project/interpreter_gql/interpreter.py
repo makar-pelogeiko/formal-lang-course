@@ -6,14 +6,16 @@ from project.parser.dist.grammarGQLListener import grammarGQLListener
 from project.parser.dist.grammarGQLVisitor import grammarGQLVisitor
 from project.interpreter_gql.GQLVisitor import GQLTreeVisitor
 from project.interpreter_gql.interpreter_utils.interpreter_except import InterpError
-
+from project.interpreter_gql.observer import ObserverOtput
 from project.parser.parser_invoker import is_in_grammar, parse_to_string
 
 
 class GQLInterpreter:
     def __init__(self, flag_info=False):
+        self.outputter = ObserverOtput()
+        self.out_log_list = []
         self.flag_info = flag_info
-        self.visitor = GQLTreeVisitor()
+        self.visitor = GQLTreeVisitor(self.outputter)
 
     def run_query(self, query):
         lexer = grammarGQLLexer(InputStream(query))
@@ -25,12 +27,14 @@ class GQLInterpreter:
             self.visitor.visit(tree)
 
         except InterpError as exc:
-            print("----Exception----")
-            print(exc.message)
-            print("-----------------")
+            self.outputter.send_out("----Exception----")
+            self.outputter.send_out(exc.message)
+            self.outputter.send_out("-----------------")
             for item in exc.stack_lst:
-                print(item)
-            print("-----------------")
+                self.outputter.send_out(item)
+            self.outputter.send_out("-----------------")
+
+        self.out_log_list = self.outputter.show()
 
     def online_run(self):
         raw_input = ""
@@ -41,30 +45,30 @@ class GQLInterpreter:
                 break
             raw_input += "\n"
             if self.flag_info:
-                print("\n<<" + parse_to_string(raw_input) + ">>\n")
+                self.outputter.send_out("\n<<" + parse_to_string(raw_input) + ">>\n")
 
             if not is_in_grammar(raw_input):
-                print("Error input: can not parse")
+                self.outputter.send_out("Error input: can not parse")
                 continue
 
             self.run_query(raw_input)
 
-        print("end executing")
+        self.outputter.send_out("end executing")
 
     def file_run(self, path):
         file = open(path, "r")
         raw_input = file.read()
 
         if self.flag_info:
-            print("\n<<" + parse_to_string(raw_input) + ">>\n")
+            self.outputter.send_out("\n<<" + parse_to_string(raw_input) + ">>\n")
 
         if not is_in_grammar(raw_input):
-            print("Error input: can not parse")
+            self.outputter.send_out("Error input: can not parse")
             return
 
         self.run_query(raw_input)
 
-        print("end executing")
+        self.outputter.send_out("end executing")
 
 
 if __name__ == "__main__":
