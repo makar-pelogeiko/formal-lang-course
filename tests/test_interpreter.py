@@ -41,12 +41,12 @@ def test_atomic_functions(input_, expect_output):
     "input_, expect_output",
     [
         (
-            """let Ig1 = load graph 'tests/data/graph1.dot'\n
+            """let Ig1 = load graph 'tests/data/graphinterp.dot'\n
 print get labels of (Ig1)\n""",
             [">>>{b, a}", ">>>{a, b}"],
         ),
         (
-            """let Ig1 = load graph 'tests/data/graph1.dot'\n
+            """let Ig1 = load graph 'tests/data/graphinterp.dot'\n
 let Ig2 = set start of (Ig1) to get starts of ( Ig1 )\n
 let st = get finals of (Ig1)\n
 print filter (fun (df) -> df in {'0', '3;2', '4',})(st)\n""",
@@ -57,12 +57,12 @@ print filter (fun (df) -> df in {'0', '3;2', '4',})(st)\n""",
             [">>>($.a)"],
         ),
         (
-            """let Ig1 = load graph 'tests/data/graph1.dot'\n
+            """let Ig1 = load graph 'tests/data/graphinterp.dot'\n
 print Ig1 && 'a b b'\n""",
             [">>>($.((a.b).b))", ">>>($.(a.(b.b)))"],
         ),
         (
-            """let Ig1 = load graph 'tests/data/graph1.dot'\n
+            """let Ig1 = load graph 'tests/data/graphinterp.dot'\n
 let Ig2 = set start of (Ig1) to get starts of ( Ig1 )\n
 let st = get finals of (Ig1)\n
 let query = ('b')** || 'a' || 'a b'\n
@@ -71,19 +71,19 @@ print inter && 'a b'\n""",
             [">>>($.(a.b))"],
         ),
         (
-            """let Ig1 = load graph 'tests/data/graph1.dot'\n
+            """let Ig1 = load graph 'tests/data/graphinterp.dot'\n
 let Ig2 = set start of (Ig1) to get starts of ( Ig1 )\n
 print Ig2 && 'a b'\n""",
             [">>>($.(a.b))"],
         ),
         (
-            """let Ig1 = load graph 'tests/data/graph1.dot'\n
+            """let Ig1 = load graph 'tests/data/graphinterp.dot'\n
 let ff = get reachable of (Ig1)\n
 print filter (fun (df) -> df[1] in {0,})(filter (fun (df) -> df[0] in {1, 2,})(ff))\n""",
             [">>>{(1, 0), (2, 0)}", ">>>{(2, 0), (1, 0)}", ">>>set()"],
         ),
         (
-            """let Ig1 = load graph 'tests/data/graph1.dot'\n
+            """let Ig1 = load graph 'tests/data/graphinterp.dot'\n
 print filter (fun (df) -> df in {'0',})(get finals of (Ig1))\n""",
             [">>>{'0'}"],
         ),
@@ -124,10 +124,10 @@ def test_multiple_functions(input_, expect_output):
             ],
         ),
         (
-            "let Ig1 = load graph 'sssgraph1.dot'\n",
+            "let Ig1 = load graph 'sssgraphinterp.dot'\n",
             [
                 "----Exception----",
-                "Can not load graph: sssgraph1.dot",
+                "Can not load graph: sssgraphinterp.dot",
                 "-----------------",
                 "expr load",
                 "bind statement: [Ig1]",
@@ -136,7 +136,7 @@ def test_multiple_functions(input_, expect_output):
         ),
         (
             """let st = get finals of (Ig1)\n
-let Ig1 = load graph 'tests/data/graph1.dot'\n""",
+let Ig1 = load graph 'tests/data/graphinterp.dot'\n""",
             [
                 "----Exception----",
                 "No value with name: Ig1",
@@ -163,7 +163,7 @@ def test_errors(input_, expect_output):
     "input_, expect_output",
     [
         (
-            "print get starts of (load graph 'tests/data/graph1.dot')\n",
+            "print get starts of (load graph 'tests/data/graphinterp.dot')\n",
             ">>>{0;1;2;3;4;5}",
         ),
     ],
