@@ -32,27 +32,34 @@ class MemoryList:
             raise InterpError(["memory call"], f"No value with name: {key}")
 
     def get_addr_elem(self, key, addr_list):
-        if key in self.run_memory.keys():
-            box = self.run_memory[key]
-            box = MemBox()
-            if not box.is_list:
-                raise InterpError(
-                    ["memory call"], f"Value in memory is not iterable: {key}"
-                )
-            try:
-                temp_val = box.value[addr_list[0]]
-                temp_lst = addr_list[1:]
-                for i in temp_lst:
-                    temp_val = temp_val[i]
-            except:
-                raise InterpError(
-                    ["memory call"], f"Error in iterate memory value: {key}"
-                )
+        if key in self.stack.keys():
+            act_dict = self.stack
 
-            return temp_val
+        elif key in self.run_memory.keys():
+            act_dict = self.run_memory
 
         else:
-            raise InterpError(["memory call"], f"No value with name: {key}")
+            raise InterpError(["memory call"], f"No addr value with name: {key}")
+
+        box = act_dict[key]
+        if not box.is_list:
+            raise InterpError(
+                ["memory call"], f"Value in memory is not iterable: {key}"
+            )
+        try:
+            temp_val = box.value[addr_list[0]]
+            temp_lst = addr_list[1:]
+            for i in temp_lst:
+                temp_val = temp_val[i]
+        except:
+            raise InterpError(["memory call"], f"Error in iterate memory value: {key}")
+
+        if isinstance(temp_val, (list, set, tuple)):
+            is_lst = True
+        else:
+            is_lst = False
+
+        return MemBox(is_lst, "str", temp_val)
 
 
 class MemBox:

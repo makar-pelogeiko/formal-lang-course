@@ -430,7 +430,7 @@ class GQLTreeVisitor(grammarGQLVisitor):
             new_type = "str"
 
             for elem in source.value:
-                if source.v_type == "str":
+                if not isinstance(elem, (list, set, tuple)):
                     param = MemBox(False, "str", elem)
                 else:
                     param = MemBox(True, "str", elem)
@@ -481,7 +481,7 @@ class GQLTreeVisitor(grammarGQLVisitor):
             new_type = "str"
 
             for elem in source.value:
-                if source.v_type == "str":
+                if not isinstance(elem, (list, set, tuple)):
                     param = MemBox(False, "str", elem)
                 else:
                     param = MemBox(True, "str", elem)
@@ -500,7 +500,10 @@ class GQLTreeVisitor(grammarGQLVisitor):
                 self.memory_lst.del_elem_stack(var_name)
 
                 if result:
-                    new_lst.append(str(elem))
+                    if isinstance(elem, (list, set, tuple)):
+                        new_lst.append(elem)
+                    else:
+                        new_lst.append(str(elem))
 
             new_box = MemBox(True, new_type, set(new_lst))
 

@@ -72,6 +72,16 @@ class GQLInterpreter:
 
 
 if __name__ == "__main__":
+
+    test_interp = GQLInterpreter()
+    test_interp.run_query(
+        "let Ig1 = load graph 'D:\\projects\\gitproj\\formal-lang-course\\tests\\data\\graph1.dot'\n"
+    )
+    test_interp.run_query("let ff = get reachable of (Ig1)\n")
+    test_interp.run_query(
+        "print filter (fun (df) -> df[1] in {0,})(filter (fun (df) -> df[0] in {1, 2,})(ff))\n"
+    )
+
     if len(sys.argv) > 1:
         if sys.argv[1] == "online":
             interp = GQLInterpreter()
