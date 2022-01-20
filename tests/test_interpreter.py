@@ -164,7 +164,7 @@ def test_errors(input_, expect_output):
     [
         (
             "print get starts of (load graph 'tests/data/graphinterp.dot')\n",
-            ">>>{0;1;2;3;4;5}",
+            [">>>{0;1;2;3;4;5}", ">>>{0;1;2;3;4;5;\\n}"],
         ),
     ],
 )
@@ -173,4 +173,9 @@ def test_multi_single_command(input_, expect_output):
     test_interp.run_query(input_)
     answer = test_interp.visitor.output_logger
 
-    assert answer == expect_output
+    result = False
+    for out in expect_output:
+        result = answer == out
+        if result:
+            break
+    assert result
