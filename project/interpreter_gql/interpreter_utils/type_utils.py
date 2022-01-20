@@ -7,7 +7,7 @@ def states_type_checker(source, act):
     exc = None
     flag = True
 
-    if type(source) != MemBox:
+    if not isinstance(source, MemBox):
         flag = False
         exc = InterpError([f"expr {act}"], "Not correct internal type")
     if source.v_type != "dfa":
@@ -18,9 +18,9 @@ def states_type_checker(source, act):
 
 
 def check_int(s):
-    if type(s) == int:
+    if isinstance(s, int):
         return True
-    elif type(s) == str:
+    elif isinstance(s, str):
         if s[0] in ("-", "+"):
             return s[1:].isdigit()
         return s.isdigit()

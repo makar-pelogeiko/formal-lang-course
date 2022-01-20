@@ -9,10 +9,10 @@ def kleene_star(arg):
     allow_types = ["dfa", "regex", "str"]
     worked = arg
 
-    if type(arg) == str:
+    if isinstance(arg, str):
         worked = MemBox(False, "str", arg)
 
-    if type(worked) != MemBox:
+    if not isinstance(worked, MemBox):
         raise InterpError(["kleene func"], "Arg is not in correct internal type")
     if worked.v_type not in allow_types or worked.is_list:
         raise InterpError(["kleene func"], "Arg is not in allowed type for operation")
@@ -34,12 +34,12 @@ def concatenate(first, second):
     f_worked = first
     s_worked = second
 
-    if type(first) == str:
+    if isinstance(first, str):
         f_worked = MemBox(False, "str", first)
-    if type(second) == str:
+    if isinstance(second, str):
         s_worked = MemBox(False, "str", second)
 
-    if type(f_worked) != MemBox or type(s_worked) != MemBox:
+    if not isinstance(f_worked, MemBox) or not isinstance(s_worked, MemBox):
         raise InterpError(["concatenate func"], "Args are not in correct internal type")
     if (
         f_worked.v_type not in allow_types
@@ -69,12 +69,12 @@ def union(first, second):
     f_worked = first
     s_worked = second
 
-    if type(first) == str:
+    if isinstance(first, str):
         f_worked = MemBox(False, "str", first)
-    if type(second) == str:
+    if isinstance(second, str):
         s_worked = MemBox(False, "str", second)
 
-    if type(f_worked) != MemBox or type(s_worked) != MemBox:
+    if not isinstance(f_worked, MemBox) or not isinstance(s_worked, MemBox):
         raise InterpError(["union func"], "Args are not in correct internal type")
     if (
         f_worked.v_type not in allow_types
@@ -102,12 +102,12 @@ def intersection(first, second):
     f_worked = first
     s_worked = second
 
-    if type(first) == str:
+    if isinstance(first, str):
         f_worked = MemBox(False, "regex", Regex(first))
-    if type(second) == str:
+    if isinstance(second, str):
         s_worked = MemBox(False, "regex", Regex(second))
 
-    if type(f_worked) != MemBox or type(s_worked) != MemBox:
+    if not isinstance(f_worked, MemBox) or not isinstance(s_worked, MemBox):
         raise InterpError(
             ["intersection func"], "Args are not in correct internal type"
         )

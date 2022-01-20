@@ -12,7 +12,7 @@ def set_or_add_start_states(source: MemBox, states: MemBox, reset: bool):
         name = "set_start_states fun"
 
     allow_types = ["dfa", "regex", "str"]
-    if type(source) != MemBox or type(states) != MemBox:
+    if not isinstance(source, MemBox) or not isinstance(states, MemBox):
         raise InterpError([f"{name}"], f"Params in not correct internal type")
 
     if source.v_type not in allow_types or source.is_list:
@@ -43,7 +43,7 @@ def set_or_add_final_states(source: MemBox, states: MemBox, reset: bool):
         name = "set_final_states fun"
 
     allow_types = ["dfa", "regex", "str"]
-    if type(source) != MemBox or type(states) != MemBox:
+    if not isinstance(source, MemBox) or not isinstance(states, MemBox):
         raise InterpError([f"{name}"], f"Params in not correct internal type")
 
     if source.v_type not in allow_types or source.is_list:

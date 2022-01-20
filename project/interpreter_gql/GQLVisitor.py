@@ -14,7 +14,7 @@ from project.interpreter_gql.interpreter_utils.type_utils import *
 from project.interpreter_gql.interpreter_utils.interpreter_except import InterpError
 
 
-class MyGQLVisitor(grammarGQLVisitor):
+class GQLTreeVisitor(grammarGQLVisitor):
     def __init__(self):
         self.memory_lst = MemoryList()
         self.output_logger = ""
@@ -55,7 +55,7 @@ class MyGQLVisitor(grammarGQLVisitor):
             try:
                 addr_lst = self.visit(ctx.addr())
                 mem_item = self.memory_lst.get_addr_elem(var_name, addr_lst)
-                if type(mem_item) != MemBox:
+                if not isinstance(mem_item, MemBox):
                     flag = False
                     raise InterpError(
                         ["var expr"], f"Except in addresing var: {var_name}"
@@ -70,7 +70,7 @@ class MyGQLVisitor(grammarGQLVisitor):
 
             try:
                 mem_item = self.memory_lst.get_elem(var_name)
-                if type(mem_item) != MemBox:
+                if not isinstance(mem_item, MemBox):
                     flag = False
                     raise InterpError(
                         ["var expr pure"], f"Except in getting var memory: {var_name}"
@@ -293,7 +293,7 @@ class MyGQLVisitor(grammarGQLVisitor):
             try:
                 source = self.visit(ctx.mapsys().expr())
 
-                if type(source) != MemBox:
+                if not isinstance(source, MemBox):
                     flag = False
                     raise InterpError(["expr map}"], "Source not correct internal type")
                 if not source.is_list:
@@ -314,7 +314,7 @@ class MyGQLVisitor(grammarGQLVisitor):
 
                     result = self.visit(ctx.mapsys().lambdasys())
 
-                    if type(result) != MemBox:
+                    if not isinstance(result, MemBox):
                         flag = False
                         raise InterpError(
                             ["expr map}"], "Wrong type from lambda, MemBox required"
@@ -342,7 +342,7 @@ class MyGQLVisitor(grammarGQLVisitor):
             try:
                 source = self.visit(ctx.filtersys().expr())
 
-                if type(source) != MemBox:
+                if not isinstance(source, MemBox):
                     flag = False
                     raise InterpError(
                         ["expr filter}"], "Source not correct internal type"
@@ -365,7 +365,7 @@ class MyGQLVisitor(grammarGQLVisitor):
 
                     result = self.visit(ctx.filtersys().lambdasys())
 
-                    if type(result) != bool:
+                    if not isinstance(result, bool):
                         flag = False
                         raise InterpError(
                             ["expr filter}"], "Wrong type from lambda, bool required"
@@ -493,7 +493,7 @@ class MyGQLVisitor(grammarGQLVisitor):
                 mem_val = self.visit(ctx.op().var(0))
                 mem_expr = self.visit(ctx.op().expr())
 
-                if type(mem_val) != MemBox or type(mem_expr) != MemBox:
+                if not isinstance(mem_val, MemBox) or not isinstance(mem_expr, MemBox):
                     flag = False
                     raise InterpError(
                         ["lambda in operator"],
@@ -536,7 +536,9 @@ class MyGQLVisitor(grammarGQLVisitor):
                         [f"lambda {operator} operator"],
                         f"2 params required: {var_name}",
                     )
-                if type(param_lst[0]) != MemBox or type(param_lst[1]) != MemBox:
+                if not isinstance(param_lst[0], MemBox) or not isinstance(
+                    param_lst[1], MemBox
+                ):
                     flag = False
                     raise InterpError(
                         [f"lambda {operator} operator"],

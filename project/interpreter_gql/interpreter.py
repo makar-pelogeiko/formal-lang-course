@@ -4,7 +4,7 @@ from project.parser.dist.grammarGQLLexer import grammarGQLLexer
 from project.parser.dist.grammarGQLParser import grammarGQLParser
 from project.parser.dist.grammarGQLListener import grammarGQLListener
 from project.parser.dist.grammarGQLVisitor import grammarGQLVisitor
-from project.interpreter_gql.GQLVisitor import MyGQLVisitor
+from project.interpreter_gql.GQLVisitor import GQLTreeVisitor
 from project.interpreter_gql.interpreter_utils.interpreter_except import InterpError
 
 from project.parser.parser_invoker import is_in_grammar, parse_to_string
@@ -13,7 +13,7 @@ from project.parser.parser_invoker import is_in_grammar, parse_to_string
 class GQLInterpreter:
     def __init__(self, flag_info=False):
         self.flag_info = flag_info
-        self.visitor = MyGQLVisitor()
+        self.visitor = GQLTreeVisitor()
 
     def run_query(self, query):
         lexer = grammarGQLLexer(InputStream(query))
@@ -75,25 +75,3 @@ if __name__ == "__main__":
         else:
             interp = GQLInterpreter()
             interp.file_run(sys.argv[1])
-
-    """
-    # "let Ig1 = load graph 'wine'\n"
-    # "print Ig1[1][3][2]\n"
-    # "print 12\n"
-    # "let Iquery1 = 'last' && ('type' || 'last')**\n"
-    # "let Iquery1 = {}\n"
-    # "print map (fun (df) -> 44 * df)({1, 2, 3,})\n"
-    query = "print filter (fun (df) -> df in {1, 2,})({1, 2, 3, 4,})\n"
-    print(parse_to_string(query))
-    lexer = grammarGQLLexer(InputStream(query))
-    stream = CommonTokenStream(lexer)
-    parser = grammarGQLParser(stream)
-    tree = parser.prog()
-    tree.getText()
-    type(tree)
-    vis = MyGQLVisitor()
-    # visitor = grammarGQLVisitor()
-    # visitor.visit(tree)
-    vis.visit(tree)
-    print("end executing")
-    """
