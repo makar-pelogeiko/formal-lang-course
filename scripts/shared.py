@@ -4,6 +4,7 @@ import pathlib
 ROOT = pathlib.Path(__file__).parent.parent
 DOCS = ROOT / "docs"
 TESTS = ROOT / "tests"
+SCRIPTS = ROOT / "scripts"
 
 
 def configure_python_path():

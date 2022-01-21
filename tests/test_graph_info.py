@@ -1,5 +1,7 @@
 import rdflib
+import pytest
 from project import graph_utils
+
 
 my_graph = graph_utils.get_graph_info("travel")
 

@@ -1,7 +1,7 @@
 antlr4-python3-runtime
 argparse~=1.4.0
 black
-cfpq-data
+cfpq-data~=1.0.2
 networkx~=2.6.2
 pre-commit
 pycubool; sys_platform == 'linux'

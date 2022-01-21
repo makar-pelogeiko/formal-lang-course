@@ -1,0 +1,4 @@
+let Ig1 = load graph 'wine'
+let Ig1 = load graph from 'home/wine.dot'
+let Iquery1 = ('type' || Il1)**
+print Ig1 && Iquery1
