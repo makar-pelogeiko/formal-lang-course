@@ -108,6 +108,7 @@
 - Создаем ноутбук, ссылка на ноутбук также размещается в [таблице](https://colab.research.google.com/drive/1ppYiD-2cBsR_hUvDhJP2l8-B3C3HHTG9?usp=sharing) курса.
 - В `Google Colab` ноутбуке выполняется вся настройка, пишется код для экспериментов, подготовки отчетов и графиков.
 - [*Task 5* сравнение производительности *RPQ* на библиотеках scipy и pycubool](https://colab.research.google.com/drive/1ppYiD-2cBsR_hUvDhJP2l8-B3C3HHTG9?usp=sharing)
+- [*Task 12* сравнение производительности *CFPQ* на библиотеках scipy и pycubool](https://colab.research.google.com/drive/1mAgZE7Q-Iy6uqlpOq6gMt7sTAZkbq7_L?usp=sharing)
 
 ## Структура репозитория
 
