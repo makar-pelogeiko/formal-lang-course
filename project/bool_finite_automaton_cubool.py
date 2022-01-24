@@ -1,6 +1,5 @@
-from scipy.sparse import kron
-from scipy.sparse import dok_matrix
 from pyformlang.finite_automaton import NondeterministicFiniteAutomaton, State
+import pycubool as cb
 
 
 class BoolFiniteAutomaton:
@@ -27,7 +26,9 @@ class BoolFiniteAutomaton:
         alphabet = nfa_in.symbols
         bool_matrices = {}
         for symbol in alphabet:
-            matrix = dok_matrix((len(nfa_in.states), len(nfa_in.states)), dtype=bool)
+            matrix = cb.Matrix.empty(
+                shape=(len(nfa_in.states), len(nfa_in.states))
+            )  # dok_matrix((len(nfa_in.states), len(nfa_in.states)), dtype=bool)
             for state in first_prim_keys:
                 if symbol in set(first_dict[state].keys()):
                     if isinstance(first_dict[state][symbol], set):
@@ -54,7 +55,7 @@ class BoolFiniteAutomaton:
         nfa_result = NondeterministicFiniteAutomaton()
         # create all transitions from several bool matrix
         for symbol in self.alphabet:
-            for i, j in zip(*self.bool_matrices[symbol].nonzero()):
+            for i, j in self.bool_matrices[symbol].to_list():
                 nfa_result.add_transition(State(i), symbol, State(j))
         # find and define start states of NFA
         for st in self.start_states:
@@ -72,14 +73,13 @@ class BoolFiniteAutomaton:
         """
         result_bools = {}
         result_alphabet = self.alphabet & snd_bool_auto.alphabet
-
         if not result_alphabet:
-            raise Exception("empty alhabet")
+            raise Exception("empty alphabet")
         # not a list, but a dictionary
         for i in result_alphabet:
-            result_bools[i] = kron(
-                self.bool_matrices[i], snd_bool_auto.bool_matrices[i], format="csr"
-            )
+            result_bools[i] = self.bool_matrices[i].kronecker(
+                snd_bool_auto.bool_matrices[i]
+            )  # kron(self.bool_matrices[i], snd_bool_auto.bool_matrices[i], format="csr")
         # build a nfa (BoolFiniteAutomaton) from several bool matrix
         obj = BoolFiniteAutomaton()
         # find and define start states of NFA
@@ -112,20 +112,26 @@ class BoolFiniteAutomaton:
         :param matrix: sparse matrix
         :return: transitive clause sparse matrix
         """
-        prev_nnz = matrix.nnz
+        prev_nnz = matrix.nvals
         curr_nnz = 0
         while prev_nnz != curr_nnz:
-            matrix += matrix @ matrix
-            prev_nnz, curr_nnz = curr_nnz, matrix.nnz
+            matrix = matrix.mxm(matrix, out=matrix, accumulate=True)
+            # matrix = matrix.ewiseadd(matrix.mxm(matrix))
+            prev_nnz, curr_nnz = curr_nnz, matrix.nvals
         return matrix
 
     @staticmethod
     def sum_matrix_lst(matrix_lst):
         """
         :param matrix_lst: list of sparse matrices
+                            !List must contain at least 1 matrix!
         :return: sparse matrix sum of matrix_lst
         """
-        return sum(matrix_lst)
+        shape = matrix_lst[0].shape
+        resultMatrix = cb.Matrix.empty(shape=shape)
+        for elem in matrix_lst:
+            resultMatrix = resultMatrix.ewiseadd(elem)
+        return resultMatrix
 
     @staticmethod
     def nonzero_pairs(matrix):
@@ -133,7 +139,4 @@ class BoolFiniteAutomaton:
         :param matrix: sparse matrix
         :return: list of tuples x, y with non zero elements in given matrix
         """
-        lst = []
-        for i, j in zip(*matrix.nonzero()):
-            lst.append((i, j))
-        return lst
+        return matrix.to_list()

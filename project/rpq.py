@@ -4,21 +4,9 @@ import project.regexp_dfa as reg_dfa
 from pyformlang.finite_automaton import State
 
 
-def transitive_closure(matrix):
-    """
-
-    :param matrix: sparse matrix
-    :return: transitive clause sparse matrix
-    """
-    prev_nnz = matrix.nnz
-    curr_nnz = 0
-    while prev_nnz != curr_nnz:
-        matrix += matrix @ matrix
-        prev_nnz, curr_nnz = curr_nnz, matrix.nnz
-    return matrix
-
-
-def rpq_graph(graph, regexp, start_nodes: set = None, finale_nodes: set = None):
+def rpq_graph(
+    graph, regexp, start_nodes: set = None, finale_nodes: set = None, matrixEngine=bools
+):
     """
     This function crosses graph and regexp and returns pairs - start and final nodes, which can be reached in crossed
     graph
@@ -32,12 +20,18 @@ def rpq_graph(graph, regexp, start_nodes: set = None, finale_nodes: set = None):
         graph, start_nodes=start_nodes, finale_nodes=finale_nodes
     )
     dfa_query = reg_dfa.dfa_from_regexp(regexp)
-    dfa_bool_automaton = bools.BoolFiniteAutomaton.bool_matrices_from_nfa(dfa_query)
-    bool_nfa = bools.BoolFiniteAutomaton.bool_matrices_from_nfa(nfa_source)
+    dfa_bool_automaton = matrixEngine.BoolFiniteAutomaton.bool_matrices_from_nfa(
+        dfa_query
+    )
+    bool_nfa = matrixEngine.BoolFiniteAutomaton.bool_matrices_from_nfa(nfa_source)
     bresult_auto = bool_nfa.intersect(dfa_bool_automaton)
-    rpq_matrix = transitive_closure(sum(bresult_auto.bool_matrices.values()))
+    rpq_matrix = matrixEngine.BoolFiniteAutomaton.transitive_closure(
+        matrixEngine.BoolFiniteAutomaton.sum_matrix_lst(
+            list(bresult_auto.bool_matrices.values())
+        )
+    )
     result_set = set()
-    for i, j in zip(*rpq_matrix.nonzero()):
+    for i, j in matrixEngine.BoolFiniteAutomaton.nonzero_pairs(rpq_matrix):
         if (
             State(i) in bresult_auto.start_states
             and State(j) in bresult_auto.final_states

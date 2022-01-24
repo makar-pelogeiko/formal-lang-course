@@ -105,8 +105,9 @@
 
 - Для выполнения экспериментов потребуется не только код, но окружение и некоторая его настройка.
 - В качестве окружения используем только [`Google Colab`](https://research.google.com/colaboratory/) ноутбуки. Для его создания требуется только учетная запись `Google`.
-- Создаем ноутбук, ссылка на ноутбук также размещается в [таблице](https://docs.google.com/spreadsheets/d/18DhYG5CuOrN4A5b5N7-mEDfDkc-7BuXF3Qsu6HD-lks/edit?usp=sharing) курса.
+- Создаем ноутбук, ссылка на ноутбук также размещается в [таблице](https://colab.research.google.com/drive/1ppYiD-2cBsR_hUvDhJP2l8-B3C3HHTG9?usp=sharing) курса.
 - В `Google Colab` ноутбуке выполняется вся настройка, пишется код для экспериментов, подготовки отчетов и графиков.
+- [*Task 5* сравнение производительности *RPQ* на библиотеках scipy и pycubool](https://colab.research.google.com/drive/1ppYiD-2cBsR_hUvDhJP2l8-B3C3HHTG9?usp=sharing)
 
 ## Структура репозитория
 
